@@ -11,23 +11,31 @@ Create Table Customers (
   );
   
 Create Table Orders (
-    Order_ID INT NOT NULL
-    OrderDate DATETIME(3) Default Current_timestamp,
-    ADD CONSTRAINT fk_customer
-    Foreign key (Customer_ID)
-    References Customers(Customer_ID),
+    Order_ID INT Primary key,
+    OrderDate timestamp,
     Employee_ID INT,
-    Total_Amount Decimal (10,2)
+    Customer_ID Int,
+    Total_Amount Decimal (10,2),
     Status Varchar (50),
-    Payment ID INT,
-    Primary Key (Order_ID)
+    Payment_ID INT
     );
 
 CREATE TABLE Order_Items (
-	Item_ID INT NOT NULL,
-    ADD CONSTRAINT fk_orders
-    Foreign key (Order_ID)
-    References Orders(Order_ID),
+	Item_ID INT Primary Key,
+    Order_ID INT,
     Product_ID INT,
     Quantity INT,
     Price_Per_Unit DECIMAL (10,2),
+	CONSTRAINT foreign key (Order_ID) References Orders(Order_ID)
+    ON UPDATE CASCADE ON DELETE SET NULL
+    );
+
+CREATE TABLE Products (
+	Product_ID INT PRIMARY KEY,
+    Product_Name Varchar (50),
+    Price decimal (10.2),
+    Stock_Quantity INT,
+    Category_ID INT,
+    Supplier_ID INT,
+    Description INT
+    );
